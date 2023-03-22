@@ -105,25 +105,28 @@ class compiler:
 
 
 # deffault config before user changes things with flags
-compileConfig = {
-	"localhost": "localhost",
-	"port": 8000,
-	"buildPath": "./build",
-	"root": "index.html",
-	"html": [
-		"./src"
-	],
-	"pages": [
-		"./src/index.html"
-	],
-	"vars": {
-		"ip": "192.192.192.1",
-		"affe": "https://media.discordapp.net/attachments/749271911988592690/1088069665051377684/IMG_20220920_152149.jpg?width=810&height=1080"
-	},
-	"autoRefresh": {
-		"ignore" : ["./build", "./.git", ".py", ".json", "./LICENSE"]
-	}
-}
+if os.path.exists("./config.json"):
+    compileConfig = json.loads(open(self.configPath, "r").read())
+else:
+    compileConfig = {
+        "localhost": "localhost",
+        "port": 8000,
+        "buildPath": "./build",
+        "root": "index.html",
+        "html": [
+            "./src"
+        ],
+        "pages": [
+            "./src/index.html"
+        ],
+        "vars": {
+            "ip": "192.192.192.1",
+            "affe": "https://media.discordapp.net/attachments/749271911988592690/1088069665051377684/IMG_20220920_152149.jpg?width=810&height=1080"
+        },
+        "autoRefresh": {
+            "ignore" : ["./build", "./.git", ".py", ".json", "./LICENSE"]
+        }
+    }
 
 #--setters--#
 #add variables to 
