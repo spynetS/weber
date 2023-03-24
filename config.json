@@ -15,7 +15,8 @@
 		"./src/js"
 	],
 	"pages": [
-		"./src/index.html"
+		"./src/index.html",
+		"./src/index2.html"
 	],
 	"vars": {
 		"logo": "GFX/Logo.svg",

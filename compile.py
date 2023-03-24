@@ -120,7 +120,7 @@ class compiler:
             offset = headStart + 6
             for q in self.cssInjections:
                 compiledPageFiles[w] = compiledPageFiles[w][:offset] + q + compiledPageFiles[w][offset: ]
-                print(compiledPageFiles[w])
+                #print(compiledPageFiles[w])
                 offset += len(q)
             compiledPageFiles[w] = bs(compiledPageFiles[w], features="html.parser").prettify()
         return compiledPageFiles
@@ -148,9 +148,27 @@ class compiler:
             with open(f'{self.config["buildPath"]}/{_n[len(_n)-1]}', "w") as f:
                 self.compiledPages[i] = self.compiledPages[i].replace('<doctype! html="">', "<DOCTYPE! html>")
                 self.compiledPages[i] = self.compiledPages[i].replace('</doctype!>', "")
+                self.addNavigation(i)
                 f.write(self.compiledPages[i])
         print("COMPILER::LOG -> Build succeeded")
 
+    def addNavigation(self,i):
+        index_navigation = '''
+		<script>
+			// when page loads we navigate to last page
+			document.addEventListener("DOMContentLoaded", function() {
+				navPage(get())
+				//dont save this
+				pop()
+			});
+			//when we lave the page we go back in history
+			window.onbeforeunload = function(){
+				//pop()
+			}
+		</script>
+        '''
+        self.compiledPages[i] = self.compiledPages[i].replace("<head>", "<head>\n"+index_navigation)
+        
 
 # deffault config before user changes things with flags
 compileConfig = {
